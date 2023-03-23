@@ -11,8 +11,8 @@
   <a href="./02. Enumeration.html">02. Enumeration</a>
   <a href="./03. preventExtensions.html">03. preventExtensions</a> -->
 
-  <h1>解構賦值</h1>
-  <h2>語法是一種 JavaScript 運算式，可以把陣列或物件中的資料解開擷取成為獨立變數。</h2>
+  <h1>解構賦值 ( Destructuring assignment ) </h1>
+  <h2>ES6 提供了解構賦值的語法，可以將陣列或者物件裡面的資料解開變成獨立的變數</h2>
   <ul>
     <li>陣列解構 & 物件解構 & 其餘解構</li>
     <li>let a = 1; 變量賦值，只能直接指定值。</li>
@@ -20,37 +20,128 @@
   </ul>
 
   <h3>解構賦值 MDN : <a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment</a></h3>
+  <h3>給進入 Vue.js 前的 ES6 必備知識 : <a href="https://book.vue.tw/appendix/es6.html#%E8%A7%A3%E6%A7%8B%E8%B3%A6%E5%80%BC-destructuring-assignment">https://book.vue.tw/appendix/es6.html#%E8%A7%A3%E6%A7%8B%E8%B3%A6%E5%80%BC-destructuring-assignment</a></h3>
 
 </body>
 </html>
 
 <script>
+  
+  function sample_Destructuring(){
+    let user = {
+      id: 88,
+      displayName: 'Ben',
+      fullName: {
+        firstName: 'Tiffany',
+        lastName: 'Tim'
+      }
+    }
+  
+    let { id, displayName, fullName } = user;
+    console.log("id:", id);
+    console.log("displayName:", displayName);
+    console.log("fullName:", fullName);
+  }
 
-  // Array
-  let a, b, rest;
-  [a, b] = [10, 20];
 
-  console.log("a:", a); // 10
 
-  console.log("b:", b); // 20
+  // Array - 變數可以在宣告式後，再透過解構賦值
+  function sample_arr(){
+    let a, b, c, d;
+    // 1.
+    // [a, b] = [10, 20];
 
-  [a, b, ...rest] = [10, 20, 30, 40, 50];
+    // 2.
+    // [a, , c] = [10, 20, 30]; // 忽略某些回傳值
 
-  console.log("rest:", rest); // [30, 40, 50]
+    // 3.
+    // Default Value - 當解構來源陣列對應的元素是 undefined 時，變數可以被設定預設值。
+    // [a = 123, b = 456] = [777];
+
+    // 4. 不完全理解結構
+    [a, [b], d] = [1, [2, 3], 4];
+
+    console.log("a:", a);
+    console.log("b:", b);
+    console.log("c:", c); // 理解結構失敗 - undefined
+    console.log("d:", d);
+  
+    console.log('--------------------------------');
+
+    // 5.
+    [a, b, ...rest] = [10, 20, 30, 40, 50];
+    console.log("...rest:", rest); // [30, 40, 50]
+
+    console.log('--------------------------------');
+
+    let [w, x, y, z] = 'Hello Word';
+    console.log(w, x, y, z);
+
+    // 6. 報錯
+    // let [x] = 1;
+    // let [p] = false;
+    // let [l] = NaN;
+    // let [k] = undefined;
+    // let [u] = null;
+    // let [y] = {};
+  }
 
 
 
   // Object
-  ({ a, b } = { a: 10, b: 20 });
-  console.log("a:", a); // 10
-  console.log("b:", b); // 20
+  function sample_obj(){
+    // 當針對物件進行解構，而該句式沒有進行宣告時，指派式外必須加上括號 ( ... )
+    // {a, b} = {a: 1, b: 2} 不是有效的獨立語法，因為左邊的 {a, b} 被視為程式碼區塊而非物件。
+    // 1.
+    ({ a, b, c } = { a: 10, b: true });
+
+    // 2.
+    // let {a, b} = {a: 10, b: true}
+    console.log("a:", a);
+    console.log("b:", b);
+    console.log("c:", c); // 理解結構失敗 - undefined
+
+    console.log('--------------------------------');
+
+    // 3. Default Value - 當解構物件中對應的值是 undefined 時，變數可以設定預設值。
+    let {x = 11, y = 22} = { x : 88 };
+    console.log("x:", x); // 88
+    console.log("y:", y); // 22
+
+    console.log('--------------------------------');
+  
+    // 5.
+    ({m, n, ...rest} = {m: 10, n: 20, c: 30, d: 40});
+    console.log("m:", m); // 10
+    console.log("n:", n); // 20
+    console.log("...rest:", rest); // {c: 30, d: 40}
+
+    console.log('--------------------------------');
+
+    // 6. 指定新的變數名稱及預設值
+    let obj = { first: 'hello', last: 'world' };
+    let { first: f, last: l } = obj;
+    // console.log("first:", first);  // error: foo is not defined
+    console.log("f:", f);
+    console.log("l:", l);
+
+    console.log('--------------------------------');
+
+    // 7. length 屬性
+    let {length : len} = 'HelloWorld';
+    console.log("len:", len);
+  }
 
 
-  ({a, b, ...rest} = {a: 10, b: 20, c: 30, d: 40});
-  console.log("a:", a); // 10
-  console.log("b:", b); // 20
-  console.log("rest:", rest); // {c: 30, d: 40}
+  // let props = [
+  //   { id: 1, name: 'Fizz'},
+  //   { id: 2, name: 'Buzz'},
+  //   { id: undefined, name: 'FizzBuzz'}
+  // ];
 
+  // let [{ name }, , { id = 5 }] = props;
 
+  // console.log("id:", id);
+  // console.log("name:", name);
 
 </script>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h1>... 展開運算子 (Spread Operator) / 其餘運算子 (Rest Operator) </h1>
+  <h2>雖然 ES6 提供的展開運算子與其餘運算子的語法都是...，不過它們兩者所代表的涵意還是不太一樣。</h2>
+  <ul>
+    <li>展開運算子通常會用在陣列，或者是函式的參數。</li>
+    <li>透過 「其餘運算子」 將剩下的部分拆解出來。</li>
+    <li>其餘運算子所分離的部分只是陣列或物件的「淺拷貝」 (shallow-copy)，若在多層物件使用時要特別小心。</li>
+  </ul>
+  
+</body>
+</html>
+
+<script>
+  // 展開運算子
+  // 將原本的 frameWorks 陣列展開成個別元素
+  let frameWorks = ['Vue.js', 'Angular', 'React'];
+  let arr = ['Awesome', ...frameWorks];
+
+  console.log("arr:", arr);
+
+
+  // 其餘運算子
+  // 搭配解構賦值的語法，將 arr 陣列拆解出來，並將剩餘的元素透過 ...others 分離
+  let [x, y, ...others] = arr;
+  console.log('x:', x);
+  console.log('y:', y);
+  console.log('others:', others);
+
+
+
+  // let [a, ...b,] = [1, 2, 3];
+  // SyntaxError 語法錯誤: 其餘元素不可以跟隨結尾逗號
+  // 需要把其餘運算子放在最後的元素
+
+</script>

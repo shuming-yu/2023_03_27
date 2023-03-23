@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <h3>樣板字面值 MDN : <a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Template_literals">https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Template_literals</a></h3>
+
+  <div id="test"></div>
+</body>
+</html>
+
+<script>
+  
+  // ...arg 其餘參數
+  function sample_total(){
+    const nums = (...arg) => {
+      console.log("arg:", arg);
+  
+      var total = 0;
+      arg.forEach(num => {
+        total = total + num;
+      });
+      console.log("total:", total);
+    }
+    
+    nums(10, 50, 100, 50, 5, 1, 1, 1, 500);
+  }
+
+  function sample_starttemplate(){
+    var a = 5;
+    var b = 10;
+    console.log('Fifteen is ' + (a + b) + ' and\nnot ' + (2 * a + b) + '.');
+  }
+
+  // 標籤樣板字面值
+  function sample_showArg(){
+    function showConsole(strings, arg1, arg2, arg3) {
+      console.log("strings:", strings);
+  
+      // arg 參數 - 標籤樣板字面值所套用的變數
+      console.log("arg1:", arg1);
+      console.log("arg2:", arg2);
+      console.log("arg3:", arg3);
+    }
+    let myName = '小明';
+
+    // 1.
+    showConsole`您好 ${myName}，這邊有一段文字！`;
+
+    // 2.
+    // showConsole`您好 ${myName}，這邊有一段文字！ ${ 123 } ${ 'Hello' }`;
+  }
+
+
+  function sample_showRestOperator(){
+    function showConsole(strings, ...arg) { // 字串拆解結果, ...arg 其餘參數
+      console.log("strings:", strings);
+      console.log("arg:", arg);
+    }
+
+    let myName = '小明';
+    showConsole`您好 ${myName}，這邊有一段文字！ ${ 123 } ${ 'Hello' }`;
+  }
+
+  
+  function sample_template(){
+    let myName = '小明';
+    let highlight = (strings, ...arg) =>
+      strings.map((str, i) => `${ str } ${ arg[i] }`).join('');
+      // strings.map((str, i) => `${ str } ${ arg[i] ? `<strong>${ arg[i] }</strong>` : '' }`).join('');
+  
+    let sentence = highlight`您好 ${myName}，這邊有一段文字！`;
+    // 您好 <strong> 小明 </strong> ，這邊有一段文字！
+    console.log("sentence:", sentence);
+    document.querySelector("#test").innerHTML = sentence;
+  }
+
+</script>
