@@ -11,7 +11,7 @@
   <a href="./intro_Operator.html">02. intro_Operator</a>
   <a href="./examples.html">03. examples</a>
 
-
+  <h3>其餘參數 MDN : <a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Functions/rest_parameters">https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Functions/rest_parameters</a></h3>
   <h3>樣板字面值 MDN : <a href="https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Template_literals">https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Template_literals</a></h3>
 
   <div id="test"></div>
@@ -19,6 +19,18 @@
 </html>
 
 <script>
+  function sample_url(){
+    let example = new URL("https://example.com:888/BEN/QueryString?buCode=BU3&name=Jonathan&age=18");
+    console.log("URL:", example);
+    let { href, search } = example;
+    console.log("href:", href);
+    console.log("search:", search);
+    
+    // let exsearchPar = example.searchParams;
+    // console.log("searchParams:", exsearchPar);
+    // console.log("searchParams.toString():", exsearchPar.toString());
+  }
+
   
   // ...arg 其餘參數
   function sample_total(){
